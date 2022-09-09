@@ -4,9 +4,10 @@ def mdc(a: int, b: int) -> int:
 
     # números positivos, e pelo menos um não nulo
     if a==0 and b==0: return -1
-    if a<0 or b<0: return -1
+    if a<0: a=-a
+    if b<0: b=-b
 
-    if (b>a): a, b = b, a
+    if b == 0: a, b = b, a
 
     while True:
 

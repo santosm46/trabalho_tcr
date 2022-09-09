@@ -1,5 +1,6 @@
 
 import os
+from mdc import mdc
 
 def clear():
     os.system("clear")
@@ -18,14 +19,47 @@ def resolverM_(vetor_M,vetor_n):
     resultadoM=[]
     for i in range (len(vetor_n)):
         mult=1
-        # print(vetor_M[i])
-        # print(vetor_n[i])
         while((vetor_M[i]*mult)%vetor_n[i]!=1):
             mult =mult+1
         resultadoM.append(mult)
     return resultadoM
 
-def ler_inteiro(msg, msg_erro="Erro! Digite um número inteiro: "):
+
+def validar_entradas(vetor_a, vetor_n):
+    tam = len(vetor_a)
+
+    for i in range (tam):
+        a=vetor_a[i]
+        n=vetor_n[i]
+        mdcan = mdc(a,n)
+
+        if(mdcan == -1):
+            print(f"Sistema sem solução pois a{i+1} e n{i+1} são zero e não tem mdc")
+            return False
+
+        if(mdcan != 1):
+            print(f"Sistema sem solução pois mdc(a{i+1},n{i+1}) = {mdcan} ≠ 1")
+            return False
+    
+    for i in range (tam):
+        for j in range (i+1, tam):
+
+            ni=vetor_n[i]
+            nj=vetor_n[j]
+            mdcnn = mdc(ni,nj)
+
+            if(mdcan == -1):
+                print(f"Sistema sem solução pois n{i+1} e n{j+1} são zero e não tem mdc")
+                return False
+
+            if(mdcnn != 1):
+                print(f"Sistema sem solução pois mdc(n{i+1},n{j+1}) = {mdcnn} ≠ 1")
+                return False
+    
+    return True
+
+
+def ler_inteiro(msg, msg_erro="Erro! Digite um número inteiro: ", min=None):
     print(msg, end="")
 
     while True:
@@ -34,16 +68,19 @@ def ler_inteiro(msg, msg_erro="Erro! Digite um número inteiro: "):
         try:
             numero = int(numero)
 
+            if min is not None and numero < min:
+                print(f"Erro! Digite um número ≥ {min}: ",end='')
+                continue
+
             return numero
         except:
             print(msg_erro, end="")
 
 
 def ler_natural(msg, msg_erro = "Erro! Digite um número natural: "):
-    print(msg, end="")
 
     while True:
-        numero = ler_inteiro(msg, msg_erro)
+        numero = ler_inteiro(msg, msg_erro=msg_erro)
 
         if(numero < 1):
             print(msg_erro, end="")
@@ -89,6 +126,7 @@ def mostrar_equacoes(qtd_equacoes, vetor_a, vetor_b, vetor_n):
         print(f"{a:2}*x ≡ {b:2} (mod {n:2})")
     print("")
 
+
 if __name__ == '__main__':
 
     vetor_a = []
@@ -108,9 +146,12 @@ if __name__ == '__main__':
         vetor_b.append(ler_inteiro(f"Digite o valor de b{i}: "))
 
         mostrar_equacoes(qtd_equacoes, vetor_a, vetor_b, vetor_n)
-        vetor_n.append(ler_inteiro(f"Digite o valor de n{i}: "))
+        vetor_n.append(ler_inteiro(f"Digite o valor de n{i}: ", min=2))
 
     mostrar_equacoes(qtd_equacoes, vetor_a, vetor_b, vetor_n)
+
+    if not validar_entradas(vetor_a, vetor_n):
+        exit(0)
 
     resolver_equacoes(vetor_a, vetor_b, vetor_n)
 
