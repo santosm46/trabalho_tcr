@@ -1,3 +1,9 @@
+
+import os
+
+def clear():
+    os.system("clear")
+
 def resolverM(vetor_n):
     produto = 1
     for ni in vetor_n:
@@ -12,30 +18,41 @@ def resolverM_(vetor_M,vetor_n):
     resultadoM=[]
     for i in range (len(vetor_n)):
         mult=1
-        print(vetor_M[i])
-        print(vetor_n[i])
+        # print(vetor_M[i])
+        # print(vetor_n[i])
         while((vetor_M[i]*mult)%vetor_n[i]!=1):
             mult =mult+1
         resultadoM.append(mult)
     return resultadoM
 
+def ler_inteiro(msg, msg_erro="Erro! Digite um número inteiro: "):
+    print(msg, end="")
+
+    while True:
+        numero = input("")
+
+        try:
+            numero = int(numero)
+
+            return numero
+        except:
+            print(msg_erro, end="")
 
 
+def ler_natural(msg, msg_erro = "Erro! Digite um número natural: "):
+    print(msg, end="")
+
+    while True:
+        numero = ler_inteiro(msg, msg_erro)
+
+        if(numero < 1):
+            print(msg_erro, end="")
+            continue
+
+        return numero
 
 
-if __name__ == '__main__':
-    # print(resolver_congruencia(35,1,3))
-
-    # vetor_a = [1, 1, 1]
-    # vetor_b = [1, 4, 1]
-    # vetor_n = [3, 5, 7]
-
-
-    vetor_a = [2, 4]
-    vetor_b = [3, 2]
-    vetor_n = [5, 7]
-    # sol. válida 158
-
+def resolver_equacoes(vetor_a, vetor_b, vetor_n):
     for i in range (len(vetor_a)):
         j=1
         while(vetor_a[i]!=1):
@@ -45,14 +62,56 @@ if __name__ == '__main__':
                 vetor_b[i]=(vetor_b[i]*j)%vetor_n[i]
 
     vetor_M = resolverM(vetor_n)
-    print(vetor_M)
+    # print(vetor_M)
     vetorM=resolverM_(vetor_M,vetor_n)
     resultado = 0
     soman=1
+
     for i in range (len(vetor_n)):
         soman = soman*vetor_n[i]
+    
     for i in range (len(vetor_a)):
-        resultado = resultado +vetor_b[i]*vetorM[i]*vetor_M[i]
-    print(f'Resultado:{resultado%soman} * {soman}L')
+        resultado = resultado + vetor_b[i]*vetorM[i]*vetor_M[i]
+
+    # print(f'Resultado: {resultado%soman} + {soman}L')
+    vi = resultado%soman
+    print(f"A solução é qualquer valor x tal que x = {vi} + {soman}L (L ∈ ℤ) \n")
+    print(f"Exemplo: para L=0, x é {vi} \n")
+
+
+def mostrar_equacoes(qtd_equacoes, vetor_a, vetor_b, vetor_n):
+    clear()
+    for i in range(qtd_equacoes):
+        a = f"{vetor_a[i]:2}" if i < len(vetor_a) else f"a{(i+1)}"
+        b = f"{vetor_b[i]:2}" if i < len(vetor_b) else f"b{(i+1)}"
+        n = f"{vetor_n[i]:2}" if i < len(vetor_n) else f"n{(i+1)}"
+
+        print(f"{a:2}*x ≡ {b:2} (mod {n:2})")
+    print("")
+
+if __name__ == '__main__':
+
+    vetor_a = []
+    vetor_b = []
+    vetor_n = []
+
+    qtd_equacoes = ler_natural("Digite a quantidade de equações: ")
+
+    print("")
+
+    for i in range(1, qtd_equacoes+1):
+
+        mostrar_equacoes(qtd_equacoes, vetor_a, vetor_b, vetor_n)
+        vetor_a.append(ler_inteiro(f"Digite o valor de a{i}: "))
+
+        mostrar_equacoes(qtd_equacoes, vetor_a, vetor_b, vetor_n)
+        vetor_b.append(ler_inteiro(f"Digite o valor de b{i}: "))
+
+        mostrar_equacoes(qtd_equacoes, vetor_a, vetor_b, vetor_n)
+        vetor_n.append(ler_inteiro(f"Digite o valor de n{i}: "))
+
+    mostrar_equacoes(qtd_equacoes, vetor_a, vetor_b, vetor_n)
+
+    resolver_equacoes(vetor_a, vetor_b, vetor_n)
 
 
