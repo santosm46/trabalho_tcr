@@ -1,9 +1,44 @@
 
+"""
+Nomes, Matrícula
+
+Mayara Alves de Oliveira,           20/0025058
+Caio Vitor Carneiro de Oliveira,    20/0057227
+Marcelo Araújo dos Santos,          16/0035481
+
+Linguagem: Python 3
+
+Tema: Teorema Chinês dos restos
+
+"""
+
 import os
-from mdc import mdc
+
 
 def clear():
     os.system("clear")
+
+def mdc(a: int, b: int) -> int:
+
+    # números positivos, e pelo menos um não nulo
+    if a==0 and b==0: return -1
+    if a<0: a=-a
+    if b<0: b=-b
+
+    if b == 0: a, b = b, a
+
+    while True:
+
+        q = int(a / b)
+        r = a % b
+
+        # descomentar linha abaixo para mostrar o passo a passo
+        # print(f"{a} = {b} * {q} + {r}")
+
+        if r == 0:
+            return b
+
+        a,b = b,r
 
 def resolverM(vetor_n):
     produto = 1
@@ -34,11 +69,11 @@ def validar_entradas(vetor_a, vetor_n):
         mdcan = mdc(a,n)
 
         if(mdcan == -1):
-            print(f"Sistema sem solução pois a{i+1} e n{i+1} são zero e não tem mdc")
+            print(f"TCR sem solução pois a{i+1} e n{i+1} são zero e não tem mdc")
             return False
 
         if(mdcan != 1):
-            print(f"Sistema sem solução pois mdc(a{i+1},n{i+1}) = {mdcan} ≠ 1")
+            print(f"TCR sem solução pois mdc(a{i+1},n{i+1}) = {mdcan} ≠ 1")
             return False
     
     for i in range (tam):
@@ -49,11 +84,11 @@ def validar_entradas(vetor_a, vetor_n):
             mdcnn = mdc(ni,nj)
 
             if(mdcan == -1):
-                print(f"Sistema sem solução pois n{i+1} e n{j+1} são zero e não tem mdc")
+                print(f"TCR não aplicável pois n{i+1} e n{j+1} são zero e não tem mdc")
                 return False
 
             if(mdcnn != 1):
-                print(f"Sistema sem solução pois mdc(n{i+1},n{j+1}) = {mdcnn} ≠ 1")
+                print(f"TCR não aplicável pois mdc(n{i+1},n{j+1}) = {mdcnn} ≠ 1")
                 return False
     
     return True
