@@ -19,6 +19,10 @@ def resolverM_(vetor_M,vetor_n):
         resultadoM.append(mult)
     return resultadoM
 
+
+
+
+
 if __name__ == '__main__':
     # print(resolver_congruencia(35,1,3))
 
@@ -27,11 +31,18 @@ if __name__ == '__main__':
     # vetor_n = [3, 5, 7]
 
 
-    vetor_a = [1, 1, 1]
-    vetor_b = [2, 3, 2]
-    vetor_n = [3, 5, 7]
+    vetor_a = [2, 4]
+    vetor_b = [3, 2]
+    vetor_n = [5, 7]
     # sol. válida 158
 
+    for i in range (len(vetor_a)):
+        j=1
+        while(vetor_a[i]!=1):
+            j=j+1
+            if(((vetor_a[i]*j)%vetor_n[i])==1):
+                vetor_a[i]=(vetor_a[i]*j)%vetor_n[i]
+                vetor_b[i]=(vetor_b[i]*j)%vetor_n[i]
 
     vetor_M = resolverM(vetor_n)
     print(vetor_M)
@@ -42,6 +53,6 @@ if __name__ == '__main__':
         soman = soman*vetor_n[i]
     for i in range (len(vetor_a)):
         resultado = resultado +vetor_b[i]*vetorM[i]*vetor_M[i]
-    print(resultado%soman)
+    print(f'Resultado:{resultado%soman} * {soman}L')
 
 
